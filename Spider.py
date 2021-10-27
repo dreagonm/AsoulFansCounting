@@ -1,5 +1,7 @@
 import requests
 import json
+import time
+import os
 
 UID = [
     672346917, # Ava
@@ -9,6 +11,13 @@ UID = [
     672342685, # Elieen
     434334701, # Nana7mi
     ]
+
+# 默认data.json目录：../PyPluginData/AsoulFansCounting
+# 或者 ./PyPluginData
+
+DataPath = './PyPluginData'
+# DataPath = '../PyPluginData/AsoulFansCounting'
+DataFileName = '/data.json'
 
 Url = 'https://api.bilibili.com/x/relation/stat' # 获取粉丝数的接口
 
@@ -38,5 +47,18 @@ def run():
         L.append(GetMemberFans(i))
     return L
 
-if __name__ == '__main__': # using for test
-    print(run())
+if __name__ == '__main__': # using for timing Mission
+    os.makedirs(DataPath,exist_ok=True)
+    L=run()
+    data = {
+        'data' : L,
+        'time' : time.time()
+    }
+    if not os.path.isfile(DataPath+DataFileName):
+        with open(DataPath+DataFileName,'w') as f:
+            f.write(json.dumps(data))
+            f.write('\n')
+    else:
+        with open(DataPath+DataFileName,'a') as f:
+            f.write(json.dumps(data))
+            f.write('\n')
