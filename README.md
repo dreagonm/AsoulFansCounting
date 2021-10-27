@@ -1,0 +1,3 @@
+# AsoulFansCounting
+
+基于MIRAI框架实现的查询Asoul成员粉丝数的工具
