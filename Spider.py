@@ -12,11 +12,11 @@ UID = [
     434334701, # Nana7mi
     ]
 
-# 默认data.json目录：../PyPluginData/AsoulFansCounting
+# 默认data.json目录：../../PyPluginData/AsoulFansCounting
 # 或者 ./PyPluginData
 
 DataPath = './PyPluginData'
-# DataPath = '../PyPluginData/AsoulFansCounting'
+# DataPath = '../../PyPluginData/AsoulFansCounting'
 DataFileName = '/data.json'
 
 Url = 'https://api.bilibili.com/x/relation/stat' # 获取粉丝数的接口

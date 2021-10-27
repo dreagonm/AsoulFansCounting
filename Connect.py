@@ -13,11 +13,11 @@ Account = 0 # 账户
 ReceiveCount = 10 # 单次从队列读取的消息数
 DELAYTIME = 2 # 每次请求间隔
 
-# 默认config.json目录：../PyPluginConfig/AsoulFansCounting
+# 默认config.json目录：../../PyPluginConfig/AsoulFansCounting
 # 或者 ./PyPluginConfig
 
 # ConfigPath = './PyPluginConfig'
-ConfigPath = '../PyPluginConfig/AsoulFansCounting'
+ConfigPath = '../../PyPluginConfig/AsoulFansCounting'
 ConfigFileName = '/Config.json'
 
 def GetConfig():
