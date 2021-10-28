@@ -16,9 +16,13 @@ DELAYTIME = 2 # 每次请求间隔
 # 默认config.json目录：../../PyPluginConfig/AsoulFansCounting
 # 或者 ./PyPluginConfig
 
-# ConfigPath = './PyPluginConfig'
-ConfigPath = '../../PyPluginConfig/AsoulFansCounting'
+ConfigPath = './PyPluginConfig'
+# ConfigPath = '../../PyPluginConfig/AsoulFansCounting'
 ConfigFileName = '/Config.json'
+
+DataPath = './PyPluginData'
+# DataPath = '../../PyPluginData/AsoulFansCounting'
+DataFileName = '/data.json'
 
 def GetConfig():
     if os.path.isfile(ConfigPath+ConfigFileName):
@@ -81,33 +85,47 @@ def Release():
 def Send(Group):
     global Session
     L = GetData()
+    History = []
+    with open(DataPath+DataFileName,"r") as f:
+        H = f.readlines()
+        for s in H:
+            History.append(json.loads(s))
+    tt = min(4,len(History))
+    mapping = [('向晚',0),('贝拉',1),('珈乐',2),('嘉然',3),('乃琳',4),('电子宠物',5)]
+    texts = []
+    for i in mapping:
+        delta = L[i[1]]-History[-tt]['data'][i[1]]
+        if(delta > 0):
+            texts.append(i[0]+"粉丝数为："+str(L[i[1]])+"( 🥵"+ str(delta) +" )\n")
+        else:
+            texts.append(i[0]+"粉丝数为："+str(L[i[1]])+"( 🥶"+ str(delta) +" )\n")
     data = {
         "sessionKey": Session,
         "target": Group,
         "messageChain": [
             {
                 "type": "Plain",
-                "text": "向晚粉丝数为："+str(L[0])+"\n"
+                "text": texts[0]
             },
             {
                 "type": "Plain",
-                "text": "贝拉粉丝数为："+str(L[1])+"\n"
+                "text": texts[1]
             },
             {
                 "type": "Plain",
-                "text": "珈乐粉丝数为："+str(L[2])+"\n"
+                "text": texts[2]
             },
             {
                 "type": "Plain",
-                "text": "嘉然粉丝数为："+str(L[3])+"\n"
+                "text": texts[3]
             },
             {
                 "type": "Plain",
-                "text": "乃琳粉丝数为："+str(L[4])+"\n"
+                "text": texts[4]
             },
             {
                 "type": "Plain",
-                "text": "电子宠物粉丝数为："+str(L[5])+"\n"
+                "text": texts[5]
             },
         ]
     }
