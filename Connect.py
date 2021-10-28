@@ -13,6 +13,7 @@ Account = 0 # 账户
 ReceiveCount = 10 # 单次从队列读取的消息数
 DELAYTIME = 2 # 每次请求间隔
 RECALLTIME = 4 # 查询增量的取样时间点（30min为单位）
+SendCommand = []
 
 # 默认config.json目录：../../PyPluginConfig/AsoulFansCounting
 # 或者 ./PyPluginConfig
@@ -27,7 +28,7 @@ DataFileName = '/data.json'
 
 def GetConfig():
     if os.path.isfile(ConfigPath+ConfigFileName):
-        global HOST,AuthKey,CLEARTIME,Account,ReceiveCount,DELAYTIME,RECALLTIME
+        global HOST,AuthKey,CLEARTIME,Account,ReceiveCount,DELAYTIME,RECALLTIME,SendCommand
         with open(ConfigPath+ConfigFileName,'r') as f:
             f.seek(0)
             s = f.read()
@@ -39,6 +40,7 @@ def GetConfig():
             ReceiveCount = data['ReceiveCount']
             DELAYTIME = data['DELAYTIME']
             RECALLTIME = data['RECALLTIME']
+            SendCommand = data['SendCommand']
     else:
         os.makedirs(ConfigPath,exist_ok=True)
         with open(ConfigPath+ConfigFileName,'w') as f:
@@ -49,7 +51,8 @@ def GetConfig():
                 'Account' : 0,
                 'ReceiveCount' : 10,
                 'DELAYTIME' : 2,
-                'RECALLTIME': 4
+                'RECALLTIME': 4,
+                'SendCommand' : ['今日a手']
             }
             f.write(json.dumps(data))
         print('请修改Config.json')
@@ -84,6 +87,12 @@ def Release():
     re = requests.post(url=HOST+'/release', json=data)
     Session = None
 
+def CheckCommand(str):
+    global SendCommand
+    for x in SendCommand:
+        if(str == x):
+            return True
+    return False
 
 def Send(Group):
     global Session
@@ -158,7 +167,7 @@ def Read():
                 FlagCommand = False
                 GroupName = message['sender']['group']['id']
                 for item in message['messageChain']:
-                    if(item['type']=='Plain' and item['text']=='今日a手'):
+                    if(item['type']=='Plain' and CheckCommand(item['text'])):
                         FlagCommand = True
                         # print("A手")
                 if(FlagCommand):
