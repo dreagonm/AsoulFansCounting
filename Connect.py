@@ -12,6 +12,7 @@ CLEARTIME = 10 # Session释放计数
 Account = 0 # 账户
 ReceiveCount = 10 # 单次从队列读取的消息数
 DELAYTIME = 2 # 每次请求间隔
+RECALLTIME = 4 # 查询增量的取样时间点（30min为单位）
 
 # 默认config.json目录：../../PyPluginConfig/AsoulFansCounting
 # 或者 ./PyPluginConfig
@@ -26,7 +27,7 @@ DataFileName = '/data.json'
 
 def GetConfig():
     if os.path.isfile(ConfigPath+ConfigFileName):
-        global HOST,AuthKey,CLEARTIME,Account,ReceiveCount,DELAYTIME
+        global HOST,AuthKey,CLEARTIME,Account,ReceiveCount,DELAYTIME,RECALLTIME
         with open(ConfigPath+ConfigFileName,'r') as f:
             f.seek(0)
             s = f.read()
@@ -37,16 +38,18 @@ def GetConfig():
             Account = data['Account']
             ReceiveCount = data['ReceiveCount']
             DELAYTIME = data['DELAYTIME']
+            RECALLTIME = data['RECALLTIME']
     else:
         os.makedirs(ConfigPath,exist_ok=True)
         with open(ConfigPath+ConfigFileName,'w') as f:
-            data = {
+            data = { # 默认配置
                 'HOST' : '',
                 'AuthKey' : '',
                 'CLEARTIME' : 10,
                 'Account' : 0,
                 'ReceiveCount' : 10,
-                'DELAYTIME' : 2
+                'DELAYTIME' : 2,
+                'RECALLTIME': 4
             }
             f.write(json.dumps(data))
         print('请修改Config.json')
@@ -90,7 +93,7 @@ def Send(Group):
         H = f.readlines()
         for s in H:
             History.append(json.loads(s))
-    tt = min(4,len(History))
+    tt = min(RECALLTIME,len(History))
     mapping = [('向晚',0),('贝拉',1),('珈乐',2),('嘉然',3),('乃琳',4),('电子宠物',5)]
     texts = []
     for i in mapping:
