@@ -94,8 +94,7 @@ def CheckCommand(str):
             return True
     return False
 
-def Send(Group):
-    global Session
+def Send(Group,Session):
     L = GetData()
     History = []
     with open(DataPath+DataFileName,"r") as f:
@@ -143,7 +142,6 @@ def Send(Group):
     }
     re = requests.post(url=HOST+'/sendGroupMessage',json=data)
 
-
 def Read():
     global Session
     param = {
@@ -171,7 +169,7 @@ def Read():
                         FlagCommand = True
                         # print("A手")
                 if(FlagCommand):
-                    Send(GroupName)
+                    Send(GroupName,Session)
 
 
 def run():
