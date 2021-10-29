@@ -95,17 +95,12 @@ def CheckCommand(str):
     return False
 
 def Send(Group,Session):
+    global Llast
     L = GetData()
-    History = []
-    with open(DataPath+DataFileName,"r") as f:
-        H = f.readlines()
-        for s in H:
-            History.append(json.loads(s))
-    tt = min(RECALLTIME,len(History))
     mapping = [('向晚',0),('贝拉',1),('珈乐',2),('嘉然',3),('乃琳',4),('电子宠物',5)]
     texts = []
     for i in mapping:
-        delta = L[i[1]]-History[-tt]['data'][i[1]]
+        delta = L[i[1]]-Llast[i[1]]
         if(delta > 0):
             texts.append(i[0]+"粉丝数为："+str(L[i[1]])+"( 🥵"+ str(delta) +" )\n")
         else:
@@ -141,6 +136,7 @@ def Send(Group,Session):
         ]
     }
     re = requests.post(url=HOST+'/sendGroupMessage',json=data)
+    Llast = L
 
 def Read():
     global Session
@@ -191,4 +187,5 @@ def run():
 
 if __name__ == '__main__':
     # Auth()
+    Llast = GetData()
     run()
