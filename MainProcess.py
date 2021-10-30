@@ -4,7 +4,7 @@ import json
 import time
 import requests
 
-CommandMap = {"('Plain','今日a手')":0}
+CommandMap = {'["Plain","今日a手"]':0}
 FuncMap = [Connect.Main]
 
 # 默认config.json目录：../../PyPluginConfig/AsoulFansCounting
@@ -39,8 +39,6 @@ def GetConfig():
             Account = data['Account']
             ReceiveCount = data['ReceiveCount']
             DELAYTIME = data['DELAYTIME']
-            CommandMap = data['CommandMap']
-            FuncMap = data['FuncMap']
     else:
         os.makedirs(ConfigPath,exist_ok=True)
         with open(ConfigPath+ConfigFileName,'w') as f:
@@ -83,6 +81,7 @@ def Release():
     Session = None
 
 def CheckCommand(MessageType,MessageContain):
+    print("CHECK")
     for x in CommandMap.keys():
         t = json.loads(x)
         if(t[0]==MessageType and t[1]==MessageContain):
@@ -97,7 +96,7 @@ def loop():
     reda = json.loads(re.text)
     Qsz = reda["data"]
     if(Qsz > 0):
-        # print("获取消息")
+        print("获取消息")
         param = {
             'sessionKey' : Session,
             'count' : ReceiveCount
@@ -106,19 +105,28 @@ def loop():
         redata = json.loads(reMessage.text)
         Message = redata['data']
         for message in Message:
-            # print("遍历")
+            print("遍历")
             if message['type'] == "GroupMessage":
                 FlagCommand = False
                 GroupName = message['sender']['group']['id']
                 for item in message['messageChain']:
-                    CheckCommand(item['type'],item['text'])
+                    try:
+                        CheckCommand(item['type'],item['text'])
+                    except KeyError:
+                        pass
 
 if __name__ == '__main__':
-    # print(json.dumps(CommandMap))
-    # print(json.dumps(FuncMap))
     GetConfig()
-    while True:
-        Auth()
+    ReCnt = 0
+    while(True):
+        if(Session == None):
+            print("登录成功")
+            Auth()
+        ReCnt = ReCnt + 1
+        print("第",ReCnt,"次读取")
         loop()
-        Release()
+        if(ReCnt == CLEARTIME):
+            ReCnt = 0
+            print("释放成功")
+            Release()
         time.sleep(DELAYTIME)
