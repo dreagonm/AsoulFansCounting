@@ -3,6 +3,7 @@ import Spider
 import time
 import requests
 import os
+import random
 
 HOST = '' # BOT服务器地址
 FILE_DIR = '' # 缓存文件目录
@@ -184,6 +185,12 @@ def run():
             Release()
         time.sleep(DELAYTIME)
 
+
+def Main(): # 提供给MainProcess的接口
+    GetConfig()
+    Auth()
+    Send()
+    Release()
 
 if __name__ == '__main__':
     # Auth()
