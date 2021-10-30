@@ -15,6 +15,7 @@ ReceiveCount = 10 # 单次从队列读取的消息数
 DELAYTIME = 2 # 每次请求间隔
 RECALLTIME = 4 # 查询增量的取样时间点（30min为单位）
 SendCommand = []
+LMap = {}
 
 # 默认config.json目录：../../PyPluginConfig/AsoulFansCounting
 # 或者 ./PyPluginConfig
@@ -30,7 +31,7 @@ DataFileName = '/data.json'
 def GetConfig():
     if os.path.isfile(ConfigPath+ConfigFileName):
         global HOST,AuthKey,CLEARTIME,Account,ReceiveCount,DELAYTIME,RECALLTIME,SendCommand
-        with open(ConfigPath+ConfigFileName,'r') as f:
+        with open(ConfigPath+ConfigFileName,'r',encoding='utf-8') as f:
             f.seek(0)
             s = f.read()
             data = json.loads(s)
@@ -97,15 +98,24 @@ def CheckCommand(str):
 
 def Send(Group,Session):
     global Llast
+    global LMap
     L = GetData()
     mapping = [('向晚',0),('贝拉',1),('珈乐',2),('嘉然',3),('乃琳',4),('电子宠物',5)]
     texts = []
-    for i in mapping:
-        delta = L[i[1]]-Llast[i[1]]
-        if(delta > 0):
-            texts.append(i[0]+"粉丝数为："+str(L[i[1]])+"( 🥵"+ str(delta) +" )\n")
-        else:
-            texts.append(i[0]+"粉丝数为："+str(L[i[1]])+"( 🥶"+ str(delta) +" )\n")
+    if(Group in LMap):
+        for i in mapping:
+            delta = L[i[1]]-LMap[Group][i[1]]
+            if(delta > 0):
+                texts.append(i[0]+"粉丝数为："+str(L[i[1]])+"( 🥵"+ str(delta) +" )\n")
+            else:
+                texts.append(i[0]+"粉丝数为："+str(L[i[1]])+"( 🥶"+ str(delta) +" )\n")
+    else:
+        for i in mapping:
+            delta = L[i[1]]-Llast[i[1]]
+            if(delta > 0):
+                texts.append(i[0]+"粉丝数为："+str(L[i[1]])+"( 🥵"+ str(delta) +" )\n")
+            else:
+                texts.append(i[0]+"粉丝数为："+str(L[i[1]])+"( 🥶"+ str(delta) +" )\n")
     data = {
         "sessionKey": Session,
         "target": Group,
@@ -137,7 +147,7 @@ def Send(Group,Session):
         ]
     }
     re = requests.post(url=HOST+'/sendGroupMessage',json=data)
-    Llast = L
+    LMap[Group] = L
 
 def Read():
     global Session
