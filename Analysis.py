@@ -99,10 +99,19 @@ def RunAnalysis(ID):
 
 def Send(ID,Group,Session,HOST):
     Name = RunAnalysis(ID)
+    if not type(ID) == int:
+        Str = '粉丝增量图\n'
+    else:
+        Str = '粉丝数量图\n'
+        
     data = {
         "sessionKey": Session,
         "target": Group,
         "messageChain": [
+            {
+                "type": "Plain",
+                "text": Str,
+            },
             {
                 "type": "Image",
                 "path": BOTPath+'/'+Name,
