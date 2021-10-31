@@ -4,7 +4,7 @@ import numpy
 import time
 import json
 DataPath = './PyPluginData'
-# DataPath = '../../PyPluginData/AsoulFansCounting'
+# DataPath = '../../PyPluginData/AsoulFansCounting/FansPic'
 DataFileName = '/data.json'
 PicName = '/All.png'
 
@@ -73,13 +73,21 @@ def Draw(ID):
         Y.append(x["data"][ID])
     # plt.rcParams['savefig.dpi']=200
     # plt.rcParams['figure.dpi']=200
-    plt.figure(figsize=(6,6))
+    plt.figure(figsize=(8,6))
     plt.xticks(range(0,t,24))
     plt.plot(X,Y,color='b',label=Lable[ID])
     plt.legend(loc='upper left',bbox_to_anchor=(0.0,0.99))
     # plt.axhline(y=0,linestyle=':')
-    # plt.savefig(DataPath+PicName,dpi=200)
+    a = plt.yticks()
+    plt.yticks(a[0],list(map(str,map(int,a[0])))) # 去科学计数法
+    plt.savefig(DataPath+'/'+str(ID)+'.jpg',dpi=200)
     plt.show()
+
+def RunAnalysis(ID):
+    if type(ID) == int:
+        Draw(ID)
+    else:
+        DrawAll()
 
 if __name__ == "__main__":
     DrawAll()
