@@ -196,11 +196,9 @@ def run():
         time.sleep(DELAYTIME)
 
 
-def Main(): # 提供给MainProcess的接口
+def Main(Group_,Session_,HOST_): # 提供给MainProcess的接口
     GetConfig()
-    Auth()
-    Send()
-    Release()
+    Send(Group_,Session_)
 
 if __name__ == '__main__':
     # Auth()

@@ -57,7 +57,8 @@ def DrawAll():
     plt.legend(loc='upper left',bbox_to_anchor=(0.0,0.99))
     plt.axhline(y=0,linestyle=':')
     plt.savefig(DataPath+PicName,dpi=200)
-    plt.show()
+    # plt.show()
+    plt.close()
 
 def Draw(ID):
     Lable = ['Ava','Bella','Carol','Diana','Elieen','Nana7mi']
@@ -85,17 +86,18 @@ def Draw(ID):
     a = plt.yticks()
     plt.yticks(a[0],list(map(str,map(int,a[0])))) # 去科学计数法
     plt.savefig(DataPath+'/'+str(ID)+'.jpg',dpi=200)
-    plt.show()
+    # plt.show()
+    plt.close()
 
 def RunAnalysis(ID):
     if type(ID) == int:
         Draw(ID)
-        return 'All.jpg'
+        return str(ID)+'.jpg'
     else:
         DrawAll()
-        return str(ID)+'.jpg'
+        return 'All.jpg'
 
-def Send(Group,Session,ID):
+def Send(ID,Group,Session,HOST):
     Name = RunAnalysis(ID)
     data = {
         "sessionKey": Session,
