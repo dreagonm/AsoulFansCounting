@@ -122,6 +122,10 @@ def Send(Group,Session):
         "messageChain": [
             {
                 "type": "Plain",
+                "text": '粉丝增长量统计时间段：\n从上次询问到本次询问之间粉丝量之间的增长量\n'
+            },
+            {
+                "type": "Plain",
                 "text": texts[0]
             },
             {
