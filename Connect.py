@@ -199,9 +199,13 @@ def run():
             Release()
         time.sleep(DELAYTIME)
 
+Llast = None
 
 def Main(Group_,Session_,HOST_): # 提供给MainProcess的接口
+    global Llast
     GetConfig()
+    if(Llast == None):
+        Llast = GetData()
     Send(Group_,Session_)
 
 if __name__ == '__main__':
