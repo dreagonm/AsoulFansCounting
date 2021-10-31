@@ -3,10 +3,14 @@ import matplotlib.pyplot as plt
 import numpy
 import time
 import json
+import os
+import requests
+
 DataPath = './PyPluginData'
 # DataPath = '../../PyPluginData/AsoulFansCounting/FansPic'
 DataFileName = '/data.json'
-PicName = '/All.png'
+PicName = '/All.jpg'
+BOTPath = 'PyPluginData/AsoulFansCounting/FansPic'
 
 def Min(x,y):
     if x<y:
@@ -86,8 +90,25 @@ def Draw(ID):
 def RunAnalysis(ID):
     if type(ID) == int:
         Draw(ID)
+        return 'All.jpg'
     else:
         DrawAll()
+        return str(ID)+'.jpg'
+
+def Send(Group,Session,ID):
+    Name = RunAnalysis(ID)
+    data = {
+        "sessionKey": Session,
+        "target": Group,
+        "messageChain": [
+            {
+                "type": "Image",
+                "path": BOTPath+'/'+Name,
+            }
+        ]
+    }
+    re = requests.post(url=HOST+'/sendGroupMessage',json=data)
+    print(re.text)
 
 if __name__ == "__main__":
     DrawAll()
