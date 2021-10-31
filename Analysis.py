@@ -7,7 +7,7 @@ import os
 import requests
 
 DataPath = './PyPluginData'
-# DataPath = '../../PyPluginData/AsoulFansCounting/FansPic'
+# DataPath = '../../PyPluginData/AsoulFansCounting'
 DataFileName = '/data.json'
 PicName = '/All.jpg'
 BOTPath = 'PyPluginData/AsoulFansCounting/FansPic'
@@ -56,7 +56,7 @@ def DrawAll():
     plt.plot(X,Y[5],color='m',label='Nana7mi')
     plt.legend(loc='upper left',bbox_to_anchor=(0.0,0.99))
     plt.axhline(y=0,linestyle=':')
-    plt.savefig(DataPath+PicName,dpi=200)
+    plt.savefig(DataPath+'/FansPic'+PicName,dpi=200)
     # plt.show()
     plt.close()
 
@@ -85,7 +85,7 @@ def Draw(ID):
     # plt.axhline(y=0,linestyle=':')
     a = plt.yticks()
     plt.yticks(a[0],list(map(str,map(int,a[0])))) # 去科学计数法
-    plt.savefig(DataPath+'/'+str(ID)+'.jpg',dpi=200)
+    plt.savefig(DataPath+'/FansPic'+'/'+str(ID)+'.jpg',dpi=200)
     # plt.show()
     plt.close()
 
