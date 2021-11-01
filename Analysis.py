@@ -6,8 +6,8 @@ import json
 import os
 import requests
 
-DataPath = './PyPluginData'
-# DataPath = '../../PyPluginData/AsoulFansCounting'
+# DataPath = './PyPluginData'
+DataPath = '../../PyPluginData/AsoulFansCounting'
 DataFileName = '/data.json'
 PicName = '/All.jpg'
 BOTPath = 'PyPluginData/AsoulFansCounting/FansPic'

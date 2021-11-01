@@ -20,12 +20,12 @@ LMap = {}
 # 默认config.json目录：../../PyPluginConfig/AsoulFansCounting
 # 或者 ./PyPluginConfig
 
-ConfigPath = './PyPluginConfig'
-# ConfigPath = '../../PyPluginConfig/AsoulFansCounting'
+# ConfigPath = './PyPluginConfig'
+ConfigPath = '../../PyPluginConfig/AsoulFansCounting'
 ConfigFileName = '/Config.json'
 
-DataPath = './PyPluginData'
-# DataPath = '../../PyPluginData/AsoulFansCounting'
+# DataPath = './PyPluginData'
+DataPath = '../../PyPluginData/AsoulFansCounting'
 DataFileName = '/data.json'
 
 def GetConfig():

@@ -33,12 +33,12 @@ FuncMap = [
 # 默认config.json目录：../../PyPluginConfig/AsoulFansCounting
 # 或者 ./PyPluginConfig
 
-ConfigPath = './PyPluginConfig'
-# ConfigPath = '../../PyPluginConfig'
+# ConfigPath = './PyPluginConfig'
+ConfigPath = '../../PyPluginConfig'
 ConfigFileName = '/MainConfig.json'
 
-DataPath = './PyPluginData'
-# DataPath = '../../PyPluginData'
+# DataPath = './PyPluginData'
+DataPath = '../../PyPluginData'
 DataFileName = '/Maindata.json'
 
 HOST = '' # BOT服务器地址
