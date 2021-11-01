@@ -56,6 +56,7 @@ def DrawAll():
     plt.plot(X,Y[5],color='m',label='Nana7mi')
     plt.legend(loc='upper left',bbox_to_anchor=(0.0,0.99))
     plt.axhline(y=0,linestyle=':')
+    os.makedirs(DataPath+'/FansPic',exist_ok=True)
     plt.savefig(DataPath+'/FansPic'+PicName,dpi=200)
     # plt.show()
     plt.close()
@@ -85,6 +86,7 @@ def Draw(ID):
     # plt.axhline(y=0,linestyle=':')
     a = plt.yticks()
     plt.yticks(a[0],list(map(str,map(int,a[0])))) # 去科学计数法
+    os.makedirs(DataPath+'/FansPic',exist_ok=True)
     plt.savefig(DataPath+'/FansPic'+'/'+str(ID)+'.jpg',dpi=200)
     # plt.show()
     plt.close()
