@@ -203,7 +203,7 @@ Llast = None
 
 def Main(Group_,Session_,HOST_): # 提供给MainProcess的接口
     global Llast
-    GetConfig()
+    # GetConfig()
     if(Llast == None):
         Llast = GetData()
     Send(Group_,Session_)
