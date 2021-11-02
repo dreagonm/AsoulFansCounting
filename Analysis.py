@@ -99,7 +99,7 @@ def RunAnalysis(ID):
         DrawAll()
         return 'All.jpg'
 
-def Send(ID,Group,Session,HOST):
+def Send(ID,Group,Session,HOST,*args):
     Name = RunAnalysis(ID)
     if not type(ID) == int:
         Str = '粉丝增量图\n'

@@ -96,7 +96,7 @@ def CheckCommand(str):
             return True
     return False
 
-def Send(Group,Session):
+def Send(Group,Session,*Args):
     global Llast
     global LMap
     L = GetData()
