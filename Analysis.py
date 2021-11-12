@@ -1,10 +1,7 @@
-from matplotlib import markers
 import matplotlib.pyplot as plt
-import numpy
 import time
 import json
 import os
-import requests
 
 # DataPath = './PyPluginData'
 DataPath = '../../PyPluginData/AsoulFansCounting'
