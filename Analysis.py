@@ -99,29 +99,25 @@ def RunAnalysis(ID):
         DrawAll()
         return 'All.jpg'
 
-def Send(ID,Group,Session,HOST,*args):
+def Send(ID,*args,**kwargs):
     Name = RunAnalysis(ID)
+    groupID = kwargs['sender']['group']['id']
+    bot = kwargs['BOT']
     if not type(ID) == int:
         Str = '粉丝增量图\n'
     else:
         Str = '粉丝数量图\n'
-        
-    data = {
-        "sessionKey": Session,
-        "target": Group,
-        "messageChain": [
-            {
-                "type": "Plain",
-                "text": Str,
-            },
-            {
-                "type": "Image",
-                "path": BOTPath+'/'+Name,
-            }
-        ]
-    }
-    re = requests.post(url=HOST+'/sendGroupMessage',json=data)
-    print(re.text)
+    messageChain = [
+        {
+            "type": "Plain",
+            "text": Str,
+        },
+        {
+            "type": "Image",
+            "path": BOTPath+'/'+Name,
+        }
+    ]
+    bot.GroupMessage(groupID,messageChain)
 
 if __name__ == "__main__":
     DrawAll()

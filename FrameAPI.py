@@ -132,8 +132,7 @@ class HttpBot:
         while(True):
             if self.GetMessageNum() > 0:
                 Message = self.MessageAcquire()
-                for message in Message:
-                    Handler(message)
+                Handler(Message,self)
             time.sleep(self.DELAYTIME)
 
 class WebsocketBot:
