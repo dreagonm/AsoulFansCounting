@@ -1,4 +1,3 @@
-from _typeshed import Self
 import requests
 import json
 import os
