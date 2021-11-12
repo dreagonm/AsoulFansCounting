@@ -10,7 +10,7 @@ FriendCommandMap = {
 }
 
 GroupCommandMap = {
-    '["Plain","^a!$"]': 0,
+    '["Plain","^今日a手$"]': 0,
     '["Plain","^今日asoul$"]': 0,
     '["Plain","^#查询引流效果$"]': 0,
     '["Plain","^一个魂在哪里$"]': 0,
