@@ -6,6 +6,7 @@
 
 [MIRAI框架](https://github.com/mamoe/mirai)
 [MIRAI-API-HTTP](https://github.com/project-mirai/mirai-api-http)
+[DgmBot](https://github.com/dreagonm/DgmBot)
 
 ## 插件功能
 
