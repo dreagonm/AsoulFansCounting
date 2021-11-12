@@ -1,8 +1,5 @@
-import os
 import Connect
 import json
-import time
-import requests
 import Analysis
 from functools import partial
 import re
@@ -42,7 +39,7 @@ FuncMap = [
 def CheckCommand(MessageType, MessageContain,CommandMap):
     for x in CommandMap.keys():
         t = json.loads(x)
-        MatchResult = re.match(CommandMap[x], MessageContain)
+        MatchResult = re.match(t[1], MessageContain)
         if(t[0] == MessageType and MatchResult != None):
             return (CommandMap[x],MatchResult.groups())
     return None
