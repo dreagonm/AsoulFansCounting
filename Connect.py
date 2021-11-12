@@ -1,4 +1,4 @@
-import Spider
+from . import Spider
 
 LMap = {}
 
