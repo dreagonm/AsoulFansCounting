@@ -70,7 +70,7 @@ def Main(*args,**kwargs): # 提供给MainProcess的接口
     if(Llast == None):
         Llast = GetData()
     groupID = kwargs['sender']['group']['id']
-    bot = kwargs['BOT']
+    bot = kwargs['bot']
     Send(groupID,bot)
 
 if __name__ == '__main__':

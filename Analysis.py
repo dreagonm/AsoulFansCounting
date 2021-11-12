@@ -99,7 +99,7 @@ def RunAnalysis(ID):
 def Send(ID,*args,**kwargs):
     Name = RunAnalysis(ID)
     groupID = kwargs['sender']['group']['id']
-    bot = kwargs['BOT']
+    bot = kwargs['bot']
     if not type(ID) == int:
         Str = '粉丝增量图\n'
     else:

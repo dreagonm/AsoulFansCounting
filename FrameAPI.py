@@ -87,7 +87,7 @@ class HttpBot:
             "messageChain": MessageChain
         }
         re = requests.post(url=self.HOST+'/sendGroupMessage',json=data)
-        redata = json.loads(re)
+        redata = json.loads(re.text)
         MID = redata["messageId"]
         return MID
 
@@ -98,7 +98,7 @@ class HttpBot:
             "messageChain": MessageChain
         }
         re = requests.post(url=self.HOST+'/sendFriendMessage',json=data)
-        redata = json.loads(re)
+        redata = json.loads(re.text)
         MID = redata["messageId"]
         return MID
 

@@ -10,7 +10,7 @@ FriendCommandMap = {
 }
 
 GroupCommandMap = {
-    '["Plain","^今日a手$"]': 0,
+    '["Plain","^a!$"]': 0,
     '["Plain","^今日asoul$"]': 0,
     '["Plain","^#查询引流效果$"]': 0,
     '["Plain","^一个魂在哪里$"]': 0,
@@ -46,18 +46,22 @@ def CheckCommand(MessageType, MessageContain,CommandMap):
 
 def MainHandler(Message,BOT):
     for message in Message:
-        if(Message['type'] == 'GroupMessage'):
+        if(message['type'] == 'GroupMessage'):
             CommandMap = GroupCommandMap
-        else:
+        elif(message['type'] == 'FriendMessage'):
             CommandMap = FriendCommandMap
-        for item in Message['messageChain']:
-            try:
-                t = CheckCommand(
-                        item['type'], item['text'], CommandMap)
-                if t != None:
-                    FuncMap[t[0]](t[1],sender = message['sender'],bot = BOT)
-            except KeyError:
-                pass
+        else:
+            CommandMap = None
+        if CommandMap != None:
+            for item in message['messageChain']:
+                try:
+                    t = CheckCommand(
+                            item['type'], item['text'], CommandMap)
+                    if t != None:
+                        print("Message Recognized ,running Plugin ID",t[0])
+                        FuncMap[t[0]](t[1],sender = message['sender'],bot = BOT)
+                except KeyError:
+                    pass
 
 if __name__ == '__main__':
     BOT = FrameAPI.HttpBot()
